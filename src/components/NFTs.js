@@ -2,6 +2,7 @@ import { Box, Heading, ListItem, UnorderedList, Image, Text, HStack, VStack, Sta
 import React, { useState, useEffect } from "react";
 import Moralis from "moralis";
 import { useMoralisWeb3Api  } from "react-moralis";
+import ImageParser from "./ImageParser";
 
 
 export const NFTs = () => {
@@ -25,20 +26,17 @@ export const NFTs = () => {
     return(
         <Box>
             <Heading mt={3}>NFTs in the Portfolio </Heading>
+                
                 <VStack 
                 divider={<StackDivider borderColor='gray.200' />}
                 spacing={4}
                 align='stretch'>
                     {nfts.map((n) => (
                     <Box key={n.id}>
-                        <Text> {n.name} :{" "}</Text>
+                        <Text> {n.name} :{" "}{n.token_id}</Text>
                         <Box>
-                            {n.token_uri}
-                        </Box>
-                        <Text>
-                        {n.token_id}
-                        </Text>
-                        
+                            <ImageParser uri={n.token_uri}/>
+                        </Box>                        
                     </Box>
                     ))}
                 </VStack>

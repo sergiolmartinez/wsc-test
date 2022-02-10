@@ -26,7 +26,7 @@ export const Transactions = () => {
 
     return(
         <Box>            
-            <Heading size="lg" mt={3}>List of Transactions </Heading>
+            <Heading textAlign="center" size="lg" mt={3}>Transactions </Heading>
             <VStack 
                 divider={<StackDivider borderColor='gray.200' />}
                 spacing={4}
@@ -35,6 +35,7 @@ export const Transactions = () => {
                     <Box key={item.id}>
                             <Text>Block Number: {item.block_number}{" "}</Text>
                             <Text>Time: {item.block_timestamp}{" "}</Text>
+                            <Text>Value: {Moralis.Units.FromWei(item.value)}{" "}</Text>
                             <Text> Outgoing address: {item.to_address}{" "}</Text>
                             <Text>Etherscan: {" "}<Link href={"https://etherscan.io/tx/" + item.hash} isExternal>{item.hash}</Link></Text>
                         </Box>

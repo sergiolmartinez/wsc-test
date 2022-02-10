@@ -1,4 +1,4 @@
-import { Box, Heading, ListItem, UnorderedList, Stack } from "@chakra-ui/react"
+import { Box, Heading, ListItem, UnorderedList, HStack, Text } from "@chakra-ui/react"
 import React, { useState, useEffect } from "react";
 import Moralis from "moralis";
 import { useMoralisWeb3Api  } from "react-moralis";
@@ -20,21 +20,29 @@ export const Tokens = () => {
         setTokens((tokens) => [...tokens, ...balances]);
       };
 
+      console.log(tokens)
 
     return(
         <Box>
-            <Heading size="lg" mt={3}>List of Token Balances </Heading>
+            <Heading textAlign="center" size="lg" my={3}>Token Balances </Heading>
 
-                <Stack direction={['column', 'row']} spacing='24px'>
+                <HStack align="center" spacing={8}>
                     {tokens.map((bal) => (
-                    <Box key={bal.id}>
-                        {bal.name} :{" "}
-                        <span>
-                        {(bal.balance / Math.pow(10, bal.decimals)).toFixed(6)}{" "}
-                        </span>
+                    <Box 
+                        p={5}
+                        align="center"
+                        shadow='md'
+                        borderWidth='1px'
+                        flex='1'
+                        borderRadius='md'
+                        key={bal.id}>
+                            <Heading size="sm">{bal.name}</Heading>
+                            <Text>
+                            {(bal.balance / Math.pow(10, bal.decimals)).toFixed(6)}{" "}
+                            </Text>
                     </Box>
                     ))}
-                </Stack>
+                </HStack>
         </Box>
  
     )
