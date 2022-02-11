@@ -1,21 +1,35 @@
-import { Box, Divider, Heading, Text, Link } from "@chakra-ui/react"
+import React, { useState, useEffect } from 'react';
+import { useMoralis } from "react-moralis";
+import { Box, Divider, Heading, Text, Link, Stack } from "@chakra-ui/react"
 import { NFTs } from "../components/NFTs";
-import { Tokens } from "../components/Tokens";
-import { Transactions } from "../components/Transactions";
+import Tokens from "../components/Tokens";
+import Transactions from "../components/Transactions";
+import { ErrorBox } from '../components/Error';
 
 
 export const Home = () => {
     
-    const address = '0x6C025d31aEA85942488c9a67E17138B6752b29f8';
+    const { isAuthenticated, authError } =  useMoralis();
+    const [address, setAddress] = useState(process.env.REACT_APP_PORTFOLIO_ADDRESS);
+    
+    useEffect(() => {
+        if (isAuthenticated) {
+        setAddress(process.env.REACT_APP_PORTFOLIO_ADDRESS);
+        console.log("Address: " + address)
+        }
+    }, [isAuthenticated]);
     
     return(
         <Box>
-            <Heading textAlign="center" size="lg" >Home</Heading>
-            <Text mt={3 }textAlign="center">Address: {" "}<Link href={"https://etherscan.io/address/" + address} isExternal>{address}</Link></Text>
+            <Stack spacing={6}>
+                {authError && ( <ErrorBox title="Authentication has failed" message={authError.message} />)}
+            </Stack> 
+            <Heading textAlign="center" size="lg" >Portfolio Summary</Heading>
+            <Text mt={3 }textAlign="center">Portfolio Address: {" "}<Link href={"https://etherscan.io/address/" + address} isExternal>{address}</Link></Text>
             <Divider my={8} />
-            <Tokens />
+            <Tokens address={address}/>
             <Divider my={8} />
-            <Transactions />
+            <Transactions address={address}/>
             
         </Box>
         

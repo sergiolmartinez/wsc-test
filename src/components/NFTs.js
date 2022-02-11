@@ -1,15 +1,22 @@
 import { Box, Heading, ListItem, UnorderedList, Image, Text, HStack, VStack, StackDivider } from "@chakra-ui/react"
 import React, { useState, useEffect } from "react";
 import Moralis from "moralis";
-import { useMoralisWeb3Api  } from "react-moralis";
+import { useMoralis  } from "react-moralis";
 import ImageParser from "./ImageParser";
 
 
 export const NFTs = () => {
     
-    const Web3Api = useMoralisWeb3Api();
-    const address = '0x6C025d31aEA85942488c9a67E17138B6752b29f8';
     const [nfts, setNfts] = useState([]);
+    const { isAuthenticated } =  useMoralis();
+    const [address, setAddress] = useState(process.env.REACT_APP_PORTFOLIO_ADDRESS);
+    
+    useEffect(() => {
+        if (isAuthenticated) {
+        setAddress(process.env.REACT_APP_PORTFOLIO_ADDRESS);
+        console.log("Address: " + address)
+        }
+    }, [isAuthenticated]);
 
     useEffect(() => {
         getNFTs();

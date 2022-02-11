@@ -1,14 +1,11 @@
-import { Box, Heading, Text, ListItem, UnorderedList, VStack, StackDivider } from "@chakra-ui/react"
+import { Box, Heading, Text, VStack, StackDivider, Link } from "@chakra-ui/react"
 import React, { useState, useEffect } from "react";
 import Moralis from "moralis";
-import { useMoralisWeb3Api } from "react-moralis";
-import { Link } from "@chakra-ui/react";
 
 
-export const Transactions = () => {
+
+export default function Transactions({address}) {
     
-    const Web3Api = useMoralisWeb3Api();
-    const address = '0x6C025d31aEA85942488c9a67E17138B6752b29f8';
     const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
